@@ -1,9 +1,29 @@
-import React from 'react'
+import React from "react";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
+import MainLayout from "./components/MainLayout";
+import MultiStepForm from "./tasks/task1-form/MultiStepForm";
+import ProductList from "./tasks/task2-products/ProductList";
+import HomePage from "./Pages/HomePage";
+import PagenotFound from "./Pages/PagenotFound";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<MainLayout />}>
+      <Route index element={<HomePage />} />
+      <Route path="*" element={<PagenotFound />} />
+      <Route path="MultiStepForm" element={<MultiStepForm />} />
+      <Route path="/ProductList" element={<ProductList />} />
+    </Route>,
+  ),
+);
 
 const App = () => {
-  return (
-    <div>App</div>
-  )
-}
+  return <RouterProvider router={router} />;
+};
 
-export default App
+export default App;
