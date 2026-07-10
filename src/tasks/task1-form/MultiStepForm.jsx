@@ -5,7 +5,13 @@ const MultiStepForm = () => {
 
   return (
     <div className="max-w-md mx-auto mt-6 p-6 bg-white rounded-xl shadow-md border border-gray-100">
-      <progress className="appearance-none w-full h-4" value={50} max={100} />
+      <div className="text-center mb-2">
+        <progress className="appearance-none w-full h-4" value={50} max={100} />
+        <span className="text-sm font-medium text-gray-500">
+          Step 1 of 3
+        </span>
+      </div>
+
       <form className="space-y-4">
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-gray-800">Personal Info</h3>
