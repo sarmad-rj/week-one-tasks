@@ -11,11 +11,13 @@ const MultiStepForm = () => {
   const [interests, setInterests] = useState([]);
 
   const [nameError, setNameError] = useState(false);
-  const [emailError, setEmailError] = useState(false);
+  //   const [emailError, setEmailError] = useState(false);
+  const [emailError, setEmailError] = useState("");
   const [countryError, setCountryError] = useState(false);
   const [interestsError, setInterestsError] = useState(false);
 
   const interestsList = ["Sports", "Music", "Coding", "Reading"];
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const validateStep = () => {
     if (currentStep === 1) {
@@ -24,11 +26,17 @@ const MultiStepForm = () => {
         return false;
       }
       if (!email.trim()) {
-        setEmailError(true);
+        setEmailError("Email is required");
         return false;
       }
+
+      if (!emailRegex.test(email)) {
+        setEmailError("Please enter a valid email address");
+        return false;
+      }
+
+      setEmailError("");
       setNameError(false);
-      setEmailError(false);
       return true;
     }
 
@@ -39,12 +47,12 @@ const MultiStepForm = () => {
       }
       if (interests.length === 0) {
         setInterestsError(true);
-        isValid = false;
-      } else {
-        setInterestsError(false);
+        return false;
       }
 
       setCountryError(false);
+      setInterestsError(false);
+
       return true;
     }
 
@@ -73,7 +81,7 @@ const MultiStepForm = () => {
     setInterests([]);
 
     setNameError(false);
-    setEmailError(false);
+    setEmailError("");
     setCountryError(false);
     setInterestsError(false);
   };
@@ -123,13 +131,12 @@ const MultiStepForm = () => {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
+                  setEmailError("");
                 }}
                 className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
               />
-              {emailError == true && (
-                <p className="text-red-500 text-xs mt-1">
-                  Please Enter Correct Email
-                </p>
+              {emailError && (
+                <p className="text-red-500 text-xs mt-1">{emailError}</p>
               )}
             </div>
           </div>
