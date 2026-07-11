@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
+import Header from "./Header";
 
 const ProductList = () => {
-  return (
+  return (<>
+    <Header />
     <div>ProductList</div>
-  )
-}
+  </>);
+};
 
-export default ProductList
+export default ProductList;

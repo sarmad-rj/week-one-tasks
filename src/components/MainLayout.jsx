@@ -28,7 +28,7 @@ const MainLayout = () => {
         </div>
       </nav>
 
-      <main className="flex-1 max-w-4xl w-full mx-auto p-6">
+      <main className="flex-1 max-w-4xl w-full mx-auto">
         <Outlet />
       </main>
     </div>
