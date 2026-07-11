@@ -6,7 +6,7 @@ export const initialProducts = [
     category: "SportShoes",
     rating: 4.7,
     image:
-      "https://cdn.runrepeat.com/storage/gallery/product_primary/30973/nike-air-max-97-lab-review-20893750-1080.webp",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKAZuloqeUjvd7eKPyDOn5LANVjqcBkwNRtqFboOUwMLVgM4JC49HBfGw&s=10",
   },
   {
     id: 2,
@@ -46,12 +46,12 @@ export const initialProducts = [
   },
   {
     id: 6,
-    name: "Casual Denim Jacket",
+    name: "Casual Shirt",
     price: 6800,
     category: "Apparel",
     rating: 4.4,
     image:
-      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?w=500&auto=format&fit=crop&q=60",
+      "https://images.unsplash.com/photo-1611312449412-6cefac5dc3e4?w=500&auto=format&fit=crop&q=60",
   },
   {
     id: 7,
@@ -60,7 +60,7 @@ export const initialProducts = [
     category: "Electronics",
     rating: 4.2,
     image:
-      "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=500&auto=format&fit=crop&q=60",
+      "https://images.unsplash.com/photo-1575311373937-040b8e1fd5b6?w=500&auto=format&fit=crop&q=60",
   },
   {
     id: 8,
@@ -69,7 +69,7 @@ export const initialProducts = [
     category: "Accessories",
     rating: 4.6,
     image:
-      "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=500&auto=format&fit=crop&q=60",
+      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=60",
   },
   {
     id: 9,

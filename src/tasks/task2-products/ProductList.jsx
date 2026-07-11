@@ -7,6 +7,35 @@ const ProductList = () => {
   return (
     <>
       <Header />
+
+      <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 pb-0">
+        <div class="w-full sm:w-auto flex items-center gap-2">
+          <label class="text-sm font-semibold text-gray-600 whitespace-nowrap">
+            Category:
+          </label>
+          <select class="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="All">All Categories</option>
+            <option value="SportShoes">SportShoes</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Apparel">Apparel</option>
+            <option value="Furniture">Furniture</option>
+          </select>
+        </div>
+
+        <div class="w-full sm:w-auto flex items-center gap-2">
+          <label class="text-sm font-semibold text-gray-600 whitespace-nowrap">
+            Sort By:
+          </label>
+          <select class="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="default">Select Option</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+      </div>
+
       <div className="p-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {initialProducts.map((product) => (
