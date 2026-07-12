@@ -1,40 +1,71 @@
 import React, { useState, useEffect } from "react";
 import { Atom } from "react-loading-indicators";
+// npm install react-loading-indicators, from https://react-loading-indicators.netlify.app/
+import { GoAlertFill } from "react-icons/go";
+import { IoMdRepeat } from "react-icons/io";
 
 const Task3 = () => {
   const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchPokemonData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const response = await fetch(
+        "https://pokeapi.co/api/v2/pokemonx?limit=15",
+      );
+
+      if (!response.ok) {
+        throw new Error("Could not connect to the Pokédex server.");
+      }
+
+      const listData = await response.json();
+
+      const detailedRequests = listData.results.map(async (poke) => {
+        const detailResponse = await fetch(poke.url);
+        if (!detailResponse.ok)
+          throw new Error("Failed to fetch Pokémon profiles.");
+        return detailResponse.json();
+      });
+
+      const finalDetailedData = await Promise.all(detailedRequests);
+      setPokemonList(finalDetailedData);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError(error.message || "An unexpected network error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchPokemonData = async () => {
-      try {
-        setLoading(true);
-
-        const response = await fetch(
-          "https://pokeapi.co/api/v2/pokemon?limit=3",
-        );
-        const listData = await response.json();
-
-        const detailedRequests = listData.results.map(async (poke) => {
-          const detailResponse = await fetch(poke.url);
-          return detailResponse.json();
-        });
-
-        const finalDetailedData = await Promise.all(detailedRequests);
-        setPokemonList(finalDetailedData);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchPokemonData();
   }, []);
 
   return (
-    <div className=" bg-gray-50 text-gray-800 p-6 flex flex-col ">
-      {loading ? (
+    <div className=" bg-gray-50 text-gray-800 p-6 flex  items-center justify-center flex-col ">
+      {error ? (
+        <div className="bg-red-50 border  border-red-200 rounded-2xl p-6 text-center max-w-sm w-full shadow-sm">
+          <div className="text-3xl mb-2 flex items-center justify-center text-red-600">
+            <GoAlertFill />
+          </div>
+          <h3 className="text-lg font-bold text-red-900 mb-1">
+            Data Fetch Failed
+          </h3>
+          <p className="text-sm text-red-700 mb-4">{error}</p>
+
+          <button
+            onClick={fetchPokemonData}
+            className="bg-red-600 hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider py-2.5 px-5 rounded-xl shadow transition duration-150 inline-flex items-center justify-center gap-2"
+          >
+            <IoMdRepeat className="text-sm" />
+            Try Again
+          </button>
+        </div>
+      ) : loading ? (
         <div className="flex flex-col items-center justify-center">
           <Atom color="#3cc83d" size="large" />
           <span className="text-sm font-semibold text-green-700 tracking-wider animate-pulse">
