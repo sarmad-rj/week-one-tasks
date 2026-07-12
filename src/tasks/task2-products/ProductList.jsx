@@ -6,10 +6,21 @@ import { initialProducts } from "./products";
 
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const categories = [
+    "All",
+    "SportShoes",
+    "Electronics",
+    "Accessories",
+    "Apparel",
+    "Furniture",
+  ];
   const displayedProducts = initialProducts.filter((product) =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  ).filter((product) => {
+    if (selectedCategory === "All") return 1;
+    return product.category === selectedCategory;
+  })
 
   return (
     <>
@@ -20,13 +31,16 @@ const ProductList = () => {
           <label class="text-sm font-semibold text-gray-600 whitespace-nowrap">
             Category:
           </label>
-          <select class="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="All">All Categories</option>
-            <option value="SportShoes">SportShoes</option>
-            <option value="Electronics">Electronics</option>
-            <option value="Accessories">Accessories</option>
-            <option value="Apparel">Apparel</option>
-            <option value="Furniture">Furniture</option>
+          <select
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            class="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {categories.map((cat, index) => (
+              <option key={index} value={cat}>
+                {cat}
+              </option>
+            ))}
           </select>
         </div>
 
