@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Atom } from "react-loading-indicators";
-// npm install react-loading-indicators, from https://react-loading-indicators.netlify.app/
 import { GoAlertFill } from "react-icons/go";
 import { IoMdRepeat } from "react-icons/io";
+import Loading from "../../components/Loading";
 
 const Task3 = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -15,7 +14,7 @@ const Task3 = () => {
       setError(null);
 
       const response = await fetch(
-        "https://pokeapi.co/api/v2/pokemonx?limit=15",
+        "https://pokeapi.co/api/v2/pokemon?limit=15",
       );
 
       if (!response.ok) {
@@ -66,12 +65,7 @@ const Task3 = () => {
           </button>
         </div>
       ) : loading ? (
-        <div className="flex flex-col items-center justify-center">
-          <Atom color="#3cc83d" size="large" />
-          <span className="text-sm font-semibold text-green-700 tracking-wider animate-pulse">
-            Loading...
-          </span>
-        </div>
+        <Loading/>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
           {pokemonList.map((poke) => (
