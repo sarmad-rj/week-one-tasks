@@ -7,6 +7,8 @@ import { initialProducts } from "./products";
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("default");
+
   const categories = [
     "All",
     "SportShoes",
@@ -15,12 +17,28 @@ const ProductList = () => {
     "Apparel",
     "Furniture",
   ];
-  const displayedProducts = initialProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase()),
-  ).filter((product) => {
-    if (selectedCategory === "All") return 1;
-    return product.category === selectedCategory;
-  })
+
+  const filteredProducts = initialProducts
+    .filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+    )
+    .filter((product) => {
+      if (selectedCategory === "All") return 1;
+      return product.category === selectedCategory;
+    });
+
+  const displayedProducts = [...filteredProducts].sort((a, b) => {
+    if (sortBy === "low-high") {
+      return a.price - b.price; 
+    }
+    if (sortBy === "high-low") {
+      return b.price - a.price; 
+    }
+    if (sortBy === "rating") {
+      return b.rating - a.rating; 
+    }
+    return 0; 
+  });
 
   return (
     <>
@@ -44,15 +62,19 @@ const ProductList = () => {
           </select>
         </div>
 
-        <div class="w-full sm:w-auto flex items-center gap-2">
-          <label class="text-sm font-semibold text-gray-600 whitespace-nowrap">
+        <div className="w-full sm:w-auto flex items-center gap-2">
+          <label className="text-sm font-semibold text-gray-600 whitespace-nowrap">
             Sort By:
           </label>
-          <select class="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)} 
+            className="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
+          >
             <option value="default">Select Option</option>
             <option value="low-high">Price: Low to High</option>
             <option value="high-low">Price: High to Low</option>
-            <option value="rating">Rating</option>
+            <option value="rating">Rating: High to Low</option>
           </select>
         </div>
       </div>
