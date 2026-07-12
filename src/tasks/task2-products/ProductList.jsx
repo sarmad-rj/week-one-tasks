@@ -1,12 +1,19 @@
 import React from "react";
 import Header from "./Header";
+import { useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { initialProducts } from "./products";
 
 const ProductList = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const displayedProducts = initialProducts.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
   return (
     <>
-      <Header />
+      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
 
       <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 pb-0">
         <div class="w-full sm:w-auto flex items-center gap-2">
@@ -38,7 +45,7 @@ const ProductList = () => {
 
       <div className="p-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {initialProducts.map((product) => (
+          {displayedProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between"
