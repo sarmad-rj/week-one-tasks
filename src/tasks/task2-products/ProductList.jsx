@@ -1,13 +1,15 @@
 import React from "react";
 import Header from "./Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
+import { FaBagShopping } from "react-icons/fa6";
 import { initialProducts } from "./products";
 
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("default");
+  const [cart, setCart] = useState([]);
 
   const categories = [
     "All",
@@ -40,19 +42,46 @@ const ProductList = () => {
     return 0; 
   });
 
+  const addToCart = (product) => {
+    setCart((oldCart) => {
+      const existingItem = oldCart.find((item) => item.id === product.id);
+
+      if (existingItem) {
+        return oldCart.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item,
+        );
+      }
+
+      return [...oldCart, { ...product, quantity: 1 }];
+    });
+  };
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      console.log("CURRENT CART DATA:");
+      console.table(cart); 
+    }
+  }, [cart]);
+
   return (
     <>
-      <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+      <Header
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        cart={cart}
+      />
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 pb-0">
-        <div class="w-full sm:w-auto flex items-center gap-2">
-          <label class="text-sm font-semibold text-gray-600 whitespace-nowrap">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 pb-0">
+        <div className="w-full sm:w-auto flex items-center gap-2">
+          <label className="text-sm font-semibold text-gray-600 whitespace-nowrap">
             Category:
           </label>
           <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
-            class="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             {categories.map((cat, index) => (
               <option key={index} value={cat}>
@@ -68,7 +97,7 @@ const ProductList = () => {
           </label>
           <select
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)} 
+            onChange={(e) => setSortBy(e.target.value)}
             className="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
           >
             <option value="default">Select Option</option>
@@ -117,21 +146,11 @@ const ProductList = () => {
                   <span className="text-l font-extrabold text-gray-900">
                     {product.price}
                   </span>
-                  <button className="flex items-center space-x-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg shadow-sm transition-colors">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                      />
-                    </svg>
+                  <button
+                    onClick={() => addToCart(product)}
+                    className="flex items-center space-x-1.5 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg shadow-sm transition-colors"
+                  >
+                    <FaBagShopping />
                     <span>Add</span>
                   </button>
                 </div>

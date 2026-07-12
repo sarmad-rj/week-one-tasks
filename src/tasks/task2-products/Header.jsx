@@ -50,7 +50,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function Header({ searchQuery, setSearchQuery }) {
+export default function Header({ searchQuery, setSearchQuery, cart = [] }) {
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+  const totalPrice = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0,
+  );
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -76,6 +81,18 @@ export default function Header({ searchQuery, setSearchQuery }) {
               inputProps={{ "aria-label": "search" }}
             />
           </Search>
+          {totalItems > 0 && (
+            <Typography
+              variant="body1"
+              sx={{
+                mr: 2,
+                fontWeight: "bold",
+                display: { xs: "none", sm: "block" },
+              }}
+            >
+              Total: {totalPrice}
+            </Typography>
+          )}
           <Box sx={{ flexGrow: 1 }} />
 
           <IconButton
@@ -83,7 +100,7 @@ export default function Header({ searchQuery, setSearchQuery }) {
             aria-label="show 17 new notifications"
             color="inherit"
           >
-            <Badge badgeContent={5} color="error">
+            <Badge badgeContent={totalItems} color="error">
               <ShoppingCartSharpIcon />
             </Badge>
           </IconButton>
