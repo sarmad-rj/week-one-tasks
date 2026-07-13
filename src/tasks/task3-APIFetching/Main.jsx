@@ -1,18 +1,19 @@
 import React from 'react'
 import Loading from "../../components/Loading";
 
-const Main = ({ pokemonList, loading, handleLoadMore }) => {
+const Main = ({ pokemonList, loading, handleLoadMore, setSelectedPokemon }) => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl">
         {pokemonList.map((poke) => (
           <div
             key={poke.id}
+            onClick={() => setSelectedPokemon(poke)}
             className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center"
           >
             <div className="bg-gray-50 rounded-xl py-4 mb-4 flex justify-center relative">
               <span className="absolute top-2 left-3 text-xs font-mono text-gray-400">
-                #{String(poke.id).padStart(3, "0")}
+                #{poke.id}
               </span>
               <img
                 src={poke.sprites.other["official-artwork"].front_default}

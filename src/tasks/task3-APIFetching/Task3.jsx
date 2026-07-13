@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
-
 import Loading from "../../components/Loading";
 import Main from "./Main";
 import ErrorComponenet from "./ErrorComponenet";
+import PokemonDetailsModal from "./PokemonDetailsModal";
 
 const Task3 = () => {
   const [pokemonList, setPokemonList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [offset, setOffset] = useState(0);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+
   const limit = 1;
 
   const fetchPokemonData = async (currentOffset) => {
@@ -62,8 +64,13 @@ const Task3 = () => {
           pokemonList={pokemonList}
           loading={loading}
           handleLoadMore={handleLoadMore}
+          setSelectedPokemon={setSelectedPokemon}
         />
       )}
+      <PokemonDetailsModal
+        selectedPokemon={selectedPokemon}
+        setSelectedPokemon={setSelectedPokemon}
+      />
     </div>
   );
 };
