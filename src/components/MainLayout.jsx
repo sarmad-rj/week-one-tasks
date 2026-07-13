@@ -23,7 +23,7 @@ const MainLayout = () => {
               <NavLink to="/ProductList" className={linkStyle}>
                 Task 2
               </NavLink>
-              <NavLink to="/Task3" className={linkStyle}>
+              <NavLink to="/Pokemons" className={linkStyle}>
                 Task 3
               </NavLink>
             </div>
