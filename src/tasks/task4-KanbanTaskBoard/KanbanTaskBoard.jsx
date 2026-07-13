@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Board from "./components/Board";
 
+const INITIAL_TASKS = [
+  {
+    id: "1",
+    title: "Design Database Schema",
+    description: "XXXXXXXXXXXXXXXXXXXXXX",
+    status: "todo",
+  },
+  {
+    id: "2",
+    title: "Develop API",
+    description: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    status: "in-progress",
+  },
+  {
+    id: "3",
+    title: "Deploy Prototype",
+    description: "XXXXXXXXXXXXXXXXXXXX",
+    status: "done",
+  },
+];
+
 const KanbanTaskBoard = () => {
+  const [tasks, setTasks] = useState(INITIAL_TASKS);
+
   return (
     <div className="text-slate-900 font-sans p-6 sm:p-10">
       <div className="max-w-7xl mx-auto">
@@ -40,7 +63,7 @@ const KanbanTaskBoard = () => {
         </section>
 
         <main>
-          <Board />
+          <Board tasks={tasks} />
         </main>
       </div>
     </div>

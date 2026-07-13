@@ -1,7 +1,7 @@
 import React from "react";
 import TaskCard from "./TaskCard";
 
-const Column = ({ title, accentColor = "bg-slate-400" }) => {
+const Column = ({ title, accentColor = "bg-slate-400", tasks }) => {
   return (
     <div className="flex flex-col flex-1 w-1/3 min-w-0 p-5 h-fit min-h-[50vh]">
       <div className="flex items-center justify-between gap-2 mb-5">
@@ -11,14 +11,15 @@ const Column = ({ title, accentColor = "bg-slate-400" }) => {
             {title}
           </h3>
         </div>
-        <span className="text-xs font-medium text-slate-600">
-          2 Tasks
+        <span className="text-xs font-medium text-slate-500">
+          {tasks.length} {tasks.length === 1 ? "Task" : "Tasks"}
         </span>
       </div>
 
       <div className="flex flex-col gap-4 overflow-y-auto pr-1">
-        <TaskCard />
-        <TaskCard />
+        {tasks.map((task) => (
+          <TaskCard key={task.id} task={task} />
+        ))}
       </div>
     </div>
   );
