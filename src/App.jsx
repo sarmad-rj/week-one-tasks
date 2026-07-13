@@ -11,6 +11,7 @@ import ProductList from "./tasks/task2-products/ProductList";
 import Assesments from "./Pages/Assesments";
 import PagenotFound from "./Pages/PagenotFound";
 import Pokemons from "./tasks/task3-APIFetching/Pokemons";
+import KanbanTaskBoard from "./tasks/task4-KanbanTaskBoard/KanbanTaskBoard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +21,7 @@ const router = createBrowserRouter(
       <Route path="/MultiStepForm" element={<MultiStepForm />} />
       <Route path="/ProductList" element={<ProductList />} />
       <Route path="/Pokemons" element={<Pokemons />} />
+      <Route path="/KanbanTaskBoard" element={<KanbanTaskBoard />} />
     </Route>,
   ),
 );

@@ -26,6 +26,9 @@ const MainLayout = () => {
               <NavLink to="/Pokemons" className={linkStyle}>
                 Task 3
               </NavLink>
+              <NavLink to="/KanbanTaskBoard" className={linkStyle}>
+                Task 3
+              </NavLink>
             </div>
           </div>
         </div>
