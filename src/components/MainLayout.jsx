@@ -27,7 +27,7 @@ const MainLayout = () => {
                 Task 3
               </NavLink>
               <NavLink to="/KanbanTaskBoard" className={linkStyle}>
-                Task 3
+                Task 4
               </NavLink>
             </div>
           </div>
