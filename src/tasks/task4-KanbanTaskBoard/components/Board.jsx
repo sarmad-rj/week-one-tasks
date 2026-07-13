@@ -1,7 +1,7 @@
 import React from "react";
 import Column from "./Column";
 
-const Board = ({ tasks }) => {
+const Board = ({ tasks, handleMoveTask }) => {
   const COLUMNS_CONFIG = [
     { id: "todo", title: "To Do", accent: "bg-amber-500" },
     { id: "in-progress", title: "In Progress", accent: "bg-blue-500" },
@@ -19,6 +19,7 @@ const Board = ({ tasks }) => {
             title={col.title}
             accentColor={col.accent}
             tasks={filteredTasks}
+            handleMoveTask={handleMoveTask}
           />
         );
       })}

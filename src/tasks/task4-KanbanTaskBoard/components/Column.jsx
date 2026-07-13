@@ -1,7 +1,12 @@
 import React from "react";
 import TaskCard from "./TaskCard";
 
-const Column = ({ title, accentColor = "bg-slate-400", tasks }) => {
+const Column = ({
+  title,
+  accentColor = "bg-slate-400",
+  tasks,
+  handleMoveTask,
+}) => {
   return (
     <div className="flex flex-col flex-1 w-1/3 min-w-0 p-5 h-fit min-h-[50vh]">
       <div className="flex items-center justify-between gap-2 mb-5">
@@ -18,7 +23,7 @@ const Column = ({ title, accentColor = "bg-slate-400", tasks }) => {
 
       <div className="flex flex-col gap-4 overflow-y-auto pr-1">
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} />
+          <TaskCard key={task.id} task={task} handleMoveTask={handleMoveTask} />
         ))}
       </div>
     </div>

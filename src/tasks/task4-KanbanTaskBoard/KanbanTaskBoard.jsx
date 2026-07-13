@@ -27,6 +27,7 @@ const KanbanTaskBoard = () => {
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const COLUMNS = ["todo", "in-progress", "done"];
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -44,6 +45,25 @@ const KanbanTaskBoard = () => {
 
     setTitle("");
     setDescription("");
+  };
+
+  const handleMoveTask = (taskId, direction) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id !== taskId) return task;
+
+        const currentIdx = COLUMNS.indexOf(task.status);
+        let nextIdx = currentIdx;
+
+        if (direction === "right" && currentIdx < COLUMNS.length - 1) {
+          nextIdx += 1;
+        } else if (direction === "left" && currentIdx > 0) {
+          nextIdx -= 1;
+        }
+
+        return { ...task, status: COLUMNS[nextIdx] };
+      }),
+    );
   };
 
   return (
@@ -85,7 +105,7 @@ const KanbanTaskBoard = () => {
         </section>
 
         <main>
-          <Board tasks={tasks} />
+          <Board tasks={tasks} handleMoveTask={handleMoveTask} />
         </main>
       </div>
     </div>
