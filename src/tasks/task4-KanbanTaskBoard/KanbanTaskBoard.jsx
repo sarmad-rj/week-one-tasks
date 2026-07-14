@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Board from "./components/Board";
+import { DragDropContext } from "@hello-pangea/dnd";
 
 const INITIAL_TASKS = [
   {
@@ -66,6 +67,27 @@ const KanbanTaskBoard = () => {
     );
   };
 
+  const handleDragEnd = (result) => {
+    const { destination, source, draggableId } = result;
+
+    if (
+      !destination ||
+      (destination.droppableId === source.droppableId &&
+        destination.index === source.index)
+    ) {
+      return;
+    }
+
+    setTasks((prevTasks) =>
+      prevTasks.map((task) => {
+        if (task.id === draggableId) {
+          return { ...task, status: destination.droppableId };
+        }
+        return task;
+      }),
+    );
+  };
+
   return (
     <div className="text-slate-900 font-sans p-6 sm:p-10">
       <div className="max-w-7xl mx-auto">
@@ -103,10 +125,11 @@ const KanbanTaskBoard = () => {
             </button>
           </form>
         </section>
-
-        <main>
-          <Board tasks={tasks} handleMoveTask={handleMoveTask} />
-        </main>
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <main>
+            <Board tasks={tasks} handleMoveTask={handleMoveTask} />
+          </main>
+        </DragDropContext>
       </div>
     </div>
   );

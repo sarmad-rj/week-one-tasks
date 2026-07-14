@@ -16,6 +16,7 @@ const Board = ({ tasks, handleMoveTask }) => {
         return (
           <Column
             key={col.id}
+            id={col.id}
             title={col.title}
             accentColor={col.accent}
             tasks={filteredTasks}

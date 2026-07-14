@@ -1,11 +1,12 @@
 import React from "react";
 import TaskCard from "./TaskCard";
+import { Droppable } from "@hello-pangea/dnd";
 
 const Column = ({
   title,
   accentColor = "bg-slate-400",
   tasks,
-  handleMoveTask,
+  handleMoveTask, id
 }) => {
   return (
     <div className="flex flex-col flex-1 w-1/3 min-w-0 p-5 h-fit min-h-[50vh]">
@@ -20,12 +21,25 @@ const Column = ({
           {tasks.length} {tasks.length === 1 ? "Task" : "Tasks"}
         </span>
       </div>
-
-      <div className="flex flex-col gap-4 overflow-y-auto pr-1">
-        {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} handleMoveTask={handleMoveTask} />
-        ))}
-      </div>
+      <Droppable droppableId={id}>
+        {(provided) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.droppableProps}
+            className="flex flex-col gap-4 overflow-y-auto pr-1 flex-1 min-h-[400px]"
+          >
+            {tasks.map((task, index) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                index={index}
+                handleMoveTask={handleMoveTask}
+              />
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </div>
   );
 };
