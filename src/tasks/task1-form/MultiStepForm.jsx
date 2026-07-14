@@ -11,7 +11,6 @@ const MultiStepForm = () => {
   const [interests, setInterests] = useState([]);
 
   const [nameError, setNameError] = useState(false);
-  //   const [emailError, setEmailError] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [countryError, setCountryError] = useState(false);
   const [interestsError, setInterestsError] = useState(false);
