@@ -6,12 +6,14 @@ import { FaBagShopping } from "react-icons/fa6";
 import { initialProducts } from "./products";
 import Filter from "./Filter/Filter";
 import ProductGrid from "./Components/ProductGrid";
+import CartModal from "./Components/CartModal";
 
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortBy, setSortBy] = useState("default");
   const [cart, setCart] = useState([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const categories = [
     "All",
@@ -73,6 +75,7 @@ const ProductList = () => {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         cart={cart}
+        onCartClick={() => setIsCartOpen(true)}
       />
 
       <Filter
@@ -87,6 +90,13 @@ const ProductList = () => {
         displayedProducts={displayedProducts}
         addToCart={addToCart}
       />
+
+      <CartModal
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
+      />
+      
     </>
   );
 };

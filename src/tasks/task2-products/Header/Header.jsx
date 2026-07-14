@@ -7,7 +7,7 @@ import SearchInput from "./SearchInput";
 import CartTotal from "./CartTotal";
 import CartIcon from "./CartIcon";
 
-const Header = ({ searchQuery, setSearchQuery, cart = [] }) => {
+const Header = ({ searchQuery, setSearchQuery, cart = [], onCartClick }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -30,7 +30,7 @@ const Header = ({ searchQuery, setSearchQuery, cart = [] }) => {
 
           <Box sx={{ flexGrow: 1 }} />
 
-          <CartIcon cart={cart} />
+          <CartIcon cart={cart} onCartClick={onCartClick} />
         </Toolbar>
       </AppBar>
     </Box>

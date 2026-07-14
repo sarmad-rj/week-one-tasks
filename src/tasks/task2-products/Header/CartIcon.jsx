@@ -3,14 +3,15 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import ShoppingCartSharpIcon from "@mui/icons-material/ShoppingCartSharp";
 
-const CartIcon = ({ cart = [] }) => {
-  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+const CartIcon = ({ cart = [], onCartClick }) => {
+  const totalItems = cart.length;
 
   return (
     <IconButton
       size="large"
       aria-label="show 17 new notifications"
       color="inherit"
+      onClick={onCartClick}
     >
       <Badge badgeContent={totalItems} color="error">
         <ShoppingCartSharpIcon />
