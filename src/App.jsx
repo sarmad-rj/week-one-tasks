@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import MainLayout from "./components/MainLayout";
 import MultiStepForm from "./tasks/task1-form/MultiStepForm";
-import ProductList from "./tasks/task2-products/ProductList";
+import ProductList from "./tasks/task2-products/App";
 import Assesments from "./Pages/Assesments";
 import PagenotFound from "./Pages/PagenotFound";
 import Pokemons from "./tasks/task3-APIFetching/Pokemons";
