@@ -6,7 +6,9 @@ const Column = ({
   title,
   accentColor = "bg-slate-400",
   tasks,
-  handleMoveTask, id
+  handleMoveTask,
+  id,
+  onDeleteTask,
 }) => {
   return (
     <div className="flex flex-col flex-1 w-1/3 min-w-0 p-5 h-fit min-h-[50vh]">
@@ -34,6 +36,7 @@ const Column = ({
                 task={task}
                 index={index}
                 handleMoveTask={handleMoveTask}
+                onDeleteTask={onDeleteTask}
               />
             ))}
             {provided.placeholder}

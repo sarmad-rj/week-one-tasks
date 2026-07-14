@@ -25,7 +25,6 @@ const INITIAL_TASKS = [
 
 const KanbanTaskBoard = () => {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
-
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const COLUMNS = ["todo", "in-progress", "done"];
@@ -36,10 +35,10 @@ const KanbanTaskBoard = () => {
     if (!title.trim()) return;
 
     const newTask = {
-      id: crypto.randomUUID(), 
+      id: crypto.randomUUID(),
       title: title.trim(),
       description: description.trim(),
-      status: "todo", 
+      status: "todo",
     };
 
     setTasks([...tasks, newTask]);
@@ -88,6 +87,16 @@ const KanbanTaskBoard = () => {
     );
   };
 
+  const handleDeleteTask = (taskId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this task?",
+    );
+
+    if (confirmed) {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    }
+  };
+
   return (
     <div className="text-slate-900 font-sans p-6 sm:p-10">
       <div className="max-w-7xl mx-auto">
@@ -127,7 +136,11 @@ const KanbanTaskBoard = () => {
         </section>
         <DragDropContext onDragEnd={handleDragEnd}>
           <main>
-            <Board tasks={tasks} handleMoveTask={handleMoveTask} />
+            <Board
+              tasks={tasks}
+              handleMoveTask={handleMoveTask}
+              onDeleteTask={handleDeleteTask}
+            />
           </main>
         </DragDropContext>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { LuTrash2, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { Draggable } from "@hello-pangea/dnd";
 
-const TaskCard = ({ task, handleMoveTask, index }) => {
+const TaskCard = ({ task, handleMoveTask, index, onDeleteTask }) => {
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided) => (
@@ -23,7 +23,10 @@ const TaskCard = ({ task, handleMoveTask, index }) => {
           )}
 
           <div className="flex items-center justify-between mt-3">
-            <button className="text-xs font-medium text-red-600 hover:text-rose-600 transition-colors flex items-center gap-1">
+            <button
+              onClick={() => onDeleteTask(task.id)}
+              className="text-xs font-medium text-red-600 hover:text-rose-600 transition-colors flex items-center gap-1"
+            >
               <LuTrash2 className="w-3.5 h-3.5" />
               Delete
             </button>
