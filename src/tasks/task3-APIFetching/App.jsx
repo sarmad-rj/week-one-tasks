@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Loading from "../../components/Loading";
-import Main from "./Main";
-import ErrorComponenet from "./ErrorComponenet";
-import PokemonDetailsModal from "./PokemonDetailsModal";
+import Main from "./components/Main";
+import ErrorPage from "./pages/ErrorPage";
+import PokemonDetailsModal from "./components/PokemonDetailsModal";
 
 const Task3 = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -11,7 +11,7 @@ const Task3 = () => {
   const [offset, setOffset] = useState(0);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
 
-  const limit = 1;
+  const limit = 3;
 
   const fetchPokemonData = async (currentOffset) => {
     try {
@@ -56,7 +56,7 @@ const Task3 = () => {
   return (
     <div className=" bg-gray-50 text-gray-800 p-6 flex  items-center justify-center flex-col ">
       {error ? (
-        <ErrorComponenet error={error} fetchPokemonData={fetchPokemonData} />
+        <ErrorPage error={error} fetchPokemonData={fetchPokemonData} />
       ) : loading && offset === 0 ? (
         <Loading />
       ) : (
