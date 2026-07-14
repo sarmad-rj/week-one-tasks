@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "./Header";
+import Header from "./Header/Header";
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
