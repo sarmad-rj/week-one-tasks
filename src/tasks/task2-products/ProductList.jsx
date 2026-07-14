@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
 import { initialProducts } from "./products";
+import Filter from "./Filter/Filter";
 
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,40 +74,13 @@ const ProductList = () => {
         cart={cart}
       />
 
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-center bg-gray-50 p-4 pb-0">
-        <div className="w-full sm:w-auto flex items-center gap-2">
-          <label className="text-sm font-semibold text-gray-600 whitespace-nowrap">
-            Category:
-          </label>
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            {categories.map((cat, index) => (
-              <option key={index} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="w-full sm:w-auto flex items-center gap-2">
-          <label className="text-sm font-semibold text-gray-600 whitespace-nowrap">
-            Sort By:
-          </label>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-full sm:w-48 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-700"
-          >
-            <option value="default">Select Option</option>
-            <option value="low-high">Price: Low to High</option>
-            <option value="high-low">Price: High to Low</option>
-            <option value="rating">Rating: High to Low</option>
-          </select>
-        </div>
-      </div>
+      <Filter
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        categories={categories}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+      />
 
       <div className="p-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
