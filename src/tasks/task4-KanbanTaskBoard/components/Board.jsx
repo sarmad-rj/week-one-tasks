@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Column from "./Column";
 import { COLUMNS_CONFIG } from "../data/constants";
 
@@ -24,4 +24,4 @@ const Board = ({ tasks, handleMoveTask, onDeleteTask }) => {
   );
 };
 
-export default Board;
+export default memo(Board);
