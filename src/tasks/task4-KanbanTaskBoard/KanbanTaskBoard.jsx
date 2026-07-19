@@ -1,37 +1,15 @@
 import React, { useState } from "react";
-import Board from "./components/Board";
 import { DragDropContext } from "@hello-pangea/dnd";
-
-const INITIAL_TASKS = [
-  {
-    id: "1",
-    title: "Design Database Schema",
-    description: "XXXXXXXXXXXXXXXXXXXXXX",
-    status: "todo",
-  },
-  {
-    id: "2",
-    title: "Develop API",
-    description: "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-    status: "in-progress",
-  },
-  {
-    id: "3",
-    title: "Deploy Prototype",
-    description: "XXXXXXXXXXXXXXXXXXXX",
-    status: "done",
-  },
-];
+import Board from "./components/Board";
+import { INITIAL_TASKS, COLUMNS } from "./data/constants";
 
 const KanbanTaskBoard = () => {
   const [tasks, setTasks] = useState(INITIAL_TASKS);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const COLUMNS = ["todo", "in-progress", "done"];
 
   const handleAddTask = (e) => {
     e.preventDefault();
-
     if (!title.trim()) return;
 
     const newTask = {
@@ -41,8 +19,7 @@ const KanbanTaskBoard = () => {
       status: "todo",
     };
 
-    setTasks([...tasks, newTask]);
-
+    setTasks((prevTasks) => [...prevTasks, newTask]);
     setTitle("");
     setDescription("");
   };
@@ -134,6 +111,7 @@ const KanbanTaskBoard = () => {
             </button>
           </form>
         </section>
+
         <DragDropContext onDragEnd={handleDragEnd}>
           <main>
             <Board

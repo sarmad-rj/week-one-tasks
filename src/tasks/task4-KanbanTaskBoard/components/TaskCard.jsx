@@ -1,8 +1,8 @@
 import React from "react";
-import { LuTrash2, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 import { Draggable } from "@hello-pangea/dnd";
+import { LuTrash2, LuChevronLeft, LuChevronRight } from "react-icons/lu";
 
-const TaskCard = ({ task, handleMoveTask, index, onDeleteTask }) => {
+const TaskCard = ({ task, index, handleMoveTask, onDeleteTask }) => {
   return (
     <Draggable draggableId={task.id} index={index}>
       {(provided) => (

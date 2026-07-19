@@ -1,13 +1,13 @@
 import React from "react";
-import TaskCard from "./TaskCard";
 import { Droppable } from "@hello-pangea/dnd";
+import TaskCard from "./TaskCard";
 
 const Column = ({
+  id,
   title,
   accentColor = "bg-slate-400",
   tasks,
   handleMoveTask,
-  id,
   onDeleteTask,
 }) => {
   return (
@@ -23,6 +23,7 @@ const Column = ({
           {tasks.length} {tasks.length === 1 ? "Task" : "Tasks"}
         </span>
       </div>
+
       <Droppable droppableId={id}>
         {(provided) => (
           <div
