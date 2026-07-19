@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 import { GoAlertFill } from "react-icons/go";
 import { IoMdRepeat } from "react-icons/io";
 
-const ErrorComponenet = ({ error, fetchPokemonData }) => {
+const ErrorPage = ({ error, fetchPokemonData }) => {
   return (
-    <div className="bg-red-50 border  border-red-200 rounded-2xl p-6 text-center max-w-sm w-full shadow-sm">
+    <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center max-w-sm w-full shadow-sm">
       <div className="text-3xl mb-2 flex items-center justify-center text-red-600">
         <GoAlertFill />
       </div>
@@ -22,4 +22,4 @@ const ErrorComponenet = ({ error, fetchPokemonData }) => {
   );
 };
 
-export default ErrorComponenet
+export default ErrorPage;
