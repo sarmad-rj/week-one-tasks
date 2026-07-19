@@ -1,12 +1,13 @@
 import React from "react";
-import Header from "./Header/Header";
+import Header from "./Components/Header/Header";
 import { useState, useEffect } from "react";
 import { FaStar } from "react-icons/fa";
 import { FaBagShopping } from "react-icons/fa6";
-import { initialProducts } from "./products";
-import Filter from "./Filter/Filter";
+import { initialProducts } from "./Data/products";
+import Filter from "./Components/Filter/Filter";
 import ProductGrid from "./Components/ProductGrid";
 import CartModal from "./Components/CartModal";
+import { categories } from "./Data/constants";
 
 const ProductList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -14,15 +15,6 @@ const ProductList = () => {
   const [sortBy, setSortBy] = useState("default");
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-
-  const categories = [
-    "All",
-    "SportShoes",
-    "Electronics",
-    "Accessories",
-    "Apparel",
-    "Furniture",
-  ];
 
   const filteredProducts = initialProducts
     .filter((product) =>
@@ -35,15 +27,15 @@ const ProductList = () => {
 
   const displayedProducts = [...filteredProducts].sort((a, b) => {
     if (sortBy === "low-high") {
-      return a.price - b.price; 
+      return a.price - b.price;
     }
     if (sortBy === "high-low") {
-      return b.price - a.price; 
+      return b.price - a.price;
     }
     if (sortBy === "rating") {
-      return b.rating - a.rating; 
+      return b.rating - a.rating;
     }
-    return 0; 
+    return 0;
   });
 
   const addToCart = (product) => {
@@ -61,13 +53,6 @@ const ProductList = () => {
       return [...oldCart, { ...product, quantity: 1 }];
     });
   };
-
-  useEffect(() => {
-    if (cart.length > 0) {
-      console.log("CURRENT CART DATA:");
-      console.table(cart); 
-    }
-  }, [cart]);
 
   return (
     <>
@@ -96,7 +81,6 @@ const ProductList = () => {
         onClose={() => setIsCartOpen(false)}
         cart={cart}
       />
-      
     </>
   );
 };
