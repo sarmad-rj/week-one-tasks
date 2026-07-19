@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { GoAlertFill } from "react-icons/go";
 import { IoMdRepeat } from "react-icons/io";
 
@@ -22,4 +22,4 @@ const ErrorPage = ({ error, fetchPokemonData }) => {
   );
 };
 
-export default ErrorPage;
+export default memo(ErrorPage);

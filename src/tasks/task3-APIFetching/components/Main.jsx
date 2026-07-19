@@ -1,5 +1,5 @@
-import React from 'react'
-import Loading from '../../../components/Loading';
+import React, { memo } from "react";
+import Loading from "../../../components/Loading";
 
 const Main = ({ pokemonList, loading, handleLoadMore, setSelectedPokemon }) => {
   return (
@@ -9,7 +9,7 @@ const Main = ({ pokemonList, loading, handleLoadMore, setSelectedPokemon }) => {
           <div
             key={poke.id}
             onClick={() => setSelectedPokemon(poke)}
-            className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center"
+            className="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm text-center cursor-pointer"
           >
             <div className="bg-gray-50 rounded-xl py-4 mb-4 flex justify-center relative">
               <span className="absolute top-2 left-3 text-xs font-mono text-gray-400">
@@ -55,4 +55,4 @@ const Main = ({ pokemonList, loading, handleLoadMore, setSelectedPokemon }) => {
   );
 };
 
-export default Main
+export default memo(Main);
