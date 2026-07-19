@@ -10,7 +10,7 @@ import MultiStepForm from "./tasks/task1-form/MultiStepForm";
 import ProductList from "./tasks/task2-products/ProductList";
 import Assesments from "./Pages/Assesments";
 import PagenotFound from "./Pages/PagenotFound";
-import Pokemons from "./tasks/task3-APIFetching/Pokemons";
+import Pokemons from "./tasks/task3-APIFetching/App";
 import KanbanTaskBoard from "./tasks/task4-KanbanTaskBoard/KanbanTaskBoard";
 
 const router = createBrowserRouter(

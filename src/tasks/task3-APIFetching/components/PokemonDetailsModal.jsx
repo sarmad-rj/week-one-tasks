@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { IoMdClose } from "react-icons/io";
 
 const PokemonDetailsModal = ({ selectedPokemon, setSelectedPokemon }) => {
@@ -75,4 +75,4 @@ const PokemonDetailsModal = ({ selectedPokemon, setSelectedPokemon }) => {
   );
 };
 
-export default PokemonDetailsModal;
+export default memo(PokemonDetailsModal);
