@@ -1,119 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import PersonalInfoStep from "./PersonalInfoStep";
 import PreferencesStep from "./PreferencesStep";
 import ReviewStep from "./ReviewStep";
 import SuccessStep from "./SuccessStep";
-
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-const INITIAL_FORM_STATE = {
-  name: "",
-  email: "",
-  country: "",
-  interests: [],
-};
-
-const INITIAL_ERROR_STATE = {
-  name: false,
-  email: "",
-  country: false,
-  interests: false,
-};
+import ProgressBar from "./Components/ProgressBar";
+import FormNavigation from "./Components/FormNavigation";
+import { INITIAL_FORM_STATE } from "./utils/constants";
 
 const MultiStepForm = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState(INITIAL_FORM_STATE);
-  const [errors, setErrors] = useState(INITIAL_ERROR_STATE);
-  const [currentProgress, setCurrentProgress] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const activeStepRef = useRef(null);
 
   const updateFields = (fields) => {
     setFormData((prev) => ({ ...prev, ...fields }));
-    const updatedKeys = Object.keys(fields);
-
-    setErrors((prev) => {
-      const copy = { ...prev };
-      updatedKeys.forEach((key) => {
-        copy[key] = key === "email" ? "" : false;
-      });
-      return copy;
-    });
-  };
-
-  const validateStep = () => {
-    const newErrors = { ...INITIAL_ERROR_STATE };
-    let isValid = true;
-
-    if (currentStep === 1) {
-      if (!formData.name.trim()) {
-        newErrors.name = true;
-        isValid = false;
-      }
-      if (!formData.email.trim()) {
-        newErrors.email = "Email is required";
-        isValid = false;
-      } else if (!EMAIL_REGEX.test(formData.email)) {
-        newErrors.email = "Please enter a valid email address";
-        isValid = false;
-      }
-    }
-
-    if (currentStep === 2) {
-      if (!formData.country) {
-        newErrors.country = true;
-        isValid = false;
-      }
-      if (formData.interests.length === 0) {
-        newErrors.interests = true;
-        isValid = false;
-      }
-    }
-
-    setErrors(newErrors);
-    return isValid;
   };
 
   const handleNext = () => {
-    if (currentStep < 3 && validateStep()) {
+    if (
+      activeStepRef.current &&
+      typeof activeStepRef.current.validate === "function"
+    ) {
+      const isValid = activeStepRef.current.validate();
+      if (!isValid) return;
+    }
+
+    if (currentStep < 3) {
       setCurrentStep((prev) => prev + 1);
-      setCurrentProgress(currentProgress + 50);
+    } else {
+      handleSubmit();
     }
   };
 
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1);
-      setCurrentProgress(currentProgress - 50);
     }
   };
 
   const handleReset = () => {
     setFormData(INITIAL_FORM_STATE);
-    setErrors(INITIAL_ERROR_STATE);
-    setCurrentProgress(0);
     setCurrentStep(1);
     setIsSubmitted(false);
   };
 
   const handleSubmit = () => {
-    console.log("Form successfully submitted!", formData);
     setIsSubmitted(true);
   };
 
   return (
     <div className="max-w-md mx-auto mt-6 p-6 bg-white rounded-xl shadow-md border border-gray-100">
-      {!isSubmitted && (
-        <div className="text-center mb-2">
-          <progress
-            className="appearance-none w-full h-4"
-            value={currentProgress}
-            max={100}
-          />
-          <span className="text-sm font-medium text-gray-500">
-            Step {currentStep} of 3
-          </span>
-        </div>
-      )}
+      <ProgressBar currentStep={currentStep} isSubmitted={isSubmitted} />
 
       <form onSubmit={(e) => e.preventDefault()}>
         {isSubmitted ? (
@@ -122,46 +61,27 @@ const MultiStepForm = () => {
           <>
             {currentStep === 1 && (
               <PersonalInfoStep
+                ref={activeStepRef}
                 formData={formData}
-                errors={errors}
                 updateFields={updateFields}
               />
             )}
+
             {currentStep === 2 && (
               <PreferencesStep
+                ref={activeStepRef}
                 formData={formData}
-                errors={errors}
                 updateFields={updateFields}
               />
             )}
-            {currentStep === 3 && (
-              <ReviewStep formData={formData} onSubmit={handleSubmit} />
-            )}
 
-            {currentStep < 3 && (
-              <div className="flex justify-between items-center pt-4 border-t border-gray-100">
-                <button
-                  type="button"
-                  onClick={handleBack}
-                  disabled={currentStep === 1}
-                  className={`px-4 py-2 text-sm rounded-md font-medium border transition-colors ${
-                    currentStep === 1
-                      ? "text-gray-300 border-gray-200 cursor-not-allowed"
-                      : "text-gray-700 border-gray-300 hover:bg-gray-50"
-                  }`}
-                >
-                  Back
-                </button>
+            {currentStep === 3 && <ReviewStep formData={formData} />}
 
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  className="px-4 py-2 text-sm bg-indigo-500 text-white rounded-md font-medium hover:bg-indigo-600 transition-colors"
-                >
-                  Next
-                </button>
-              </div>
-            )}
+            <FormNavigation
+              currentStep={currentStep}
+              onBack={handleBack}
+              onNext={handleNext}
+            />
           </>
         )}
       </form>

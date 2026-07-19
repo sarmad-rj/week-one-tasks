@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState, forwardRef, useImperativeHandle } from "react";
+import { validateName, validateEmail } from "./utils/validation";
+import { STEP_1_ERROR_STATE } from "./utils/constants";
 
-const PersonalInfoStep = ({ formData, errors, updateFields }) => {
+const PersonalInfoStep = forwardRef(({ formData, updateFields }, ref) => {
+  const [localErrors, setLocalErrors] = useState(STEP_1_ERROR_STATE);
+
+  const validate = () => {
+    const nameError = validateName(formData.name);
+    const emailError = validateEmail(formData.email);
+
+    setLocalErrors({
+      name: nameError,
+      email: emailError,
+    });
+
+    return !nameError && !emailError;
+  };
+
+  useImperativeHandle(ref, () => ({
+    validate,
+  }));
+
+  const handleInputChange = (field, value) => {
+    updateFields({ [field]: value });
+    if (localErrors[field]) {
+      setLocalErrors((prev) => ({ ...prev, [field]: "" }));
+    }
+  };
+
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-bold text-gray-800">Personal Info</h3>
@@ -10,12 +37,16 @@ const PersonalInfoStep = ({ formData, errors, updateFields }) => {
         <input
           type="text"
           value={formData.name}
-          onChange={(e) => updateFields({ name: e.target.value })}
-          className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+          onChange={(e) => handleInputChange("name", e.target.value)}
+          className={`mt-1 w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 outline-none transition-all ${
+            localErrors.name
+              ? "border-red-500 focus:ring-red-500"
+              : "border-gray-300"
+          }`}
           placeholder="Sarmad"
         />
-        {errors.name && (
-          <p className="text-red-500 text-xs mt-1">Please enter your name</p>
+        {localErrors.name && (
+          <p className="text-red-500 text-xs mt-1">{localErrors.name}</p>
         )}
       </div>
 
@@ -24,16 +55,22 @@ const PersonalInfoStep = ({ formData, errors, updateFields }) => {
         <input
           type="email"
           value={formData.email}
-          onChange={(e) => updateFields({ email: e.target.value })}
-          className="mt-1 w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none transition-all"
+          onChange={(e) => handleInputChange("email", e.target.value)}
+          className={`mt-1 w-full p-2 border rounded-md focus:ring-2 focus:ring-indigo-500 outline-none transition-all ${
+            localErrors.email
+              ? "border-red-500 focus:ring-red-500"
+              : "border-gray-300"
+          }`}
           placeholder="your@email.com"
         />
-        {errors.email && (
-          <p className="text-red-500 text-xs mt-1">{errors.email}</p>
+        {localErrors.email && (
+          <p className="text-red-500 text-xs mt-1">{localErrors.email}</p>
         )}
       </div>
     </div>
   );
-};
+});
+
+PersonalInfoStep.displayName = "PersonalInfoStep";
 
 export default PersonalInfoStep;
